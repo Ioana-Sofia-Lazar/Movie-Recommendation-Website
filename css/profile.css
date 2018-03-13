@@ -17,9 +17,9 @@ a
 }
 
 #divCoverPhoto {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
 }
 
 .card
@@ -71,9 +71,8 @@ a
 .profile-user-page .user-profile-data h1
 {
     font-family: "Lato" , sans-serif;
-    margin-top: 0.35em;
+    margin: 0.35em;
     color: #292f33;
-    margin-bottom: 0;
 }
 .profile-user-page .user-profile-data p
 {

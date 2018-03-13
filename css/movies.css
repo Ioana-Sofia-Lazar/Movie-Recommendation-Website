@@ -9,6 +9,7 @@
 }
 
 .movieContainer {
+    position: relative;
     display: inline-block;
     padding: 8px;
     border-radius: 3px;
@@ -22,23 +23,29 @@
     flex-flow: row wrap;
 }
 
-recommendationsMovieOptions > .optionButton {
-    width: 48%;
-    margin: 1px;
-    color: dimgray;
-}
-
 .movieTitle {
     word-wrap: break-word !important;
     max-width: 200px;
 }
 
-watchlistMovieOptions {
-    position: absolute;
+.watchlistMovieOptions, .recommendationsMovieOptions, .seenMovieOptions {   
     bottom: 15px;
 }
-watchlistMovieOptions > .optionButton {
+.recommendationsMovieOptions > .optionButton,
+.watchlistMovieOptions > .optionButton, 
+.seenMovieOptions > .optionButton {
     width: 48%;
     margin: 1px;
     color: dimgray;
+}
+.watchlistMovieOptions > .optionButton {
+    width: 100%;
+}
+
+.removeIcon {
+    position: absolute;
+    right: 10px;
+    color: white;
+    display: none;
+    cursor: pointer;
 }

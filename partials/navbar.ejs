@@ -4,15 +4,13 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a> </li>
                 <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/recommendations">Recommendations</a> </li>
-                <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="">Community</a> </li>
+                <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/watchlist">Watchlist</a> </li>
+                <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/seen">Seen</a> </li>
+                <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/community">Community</a> </li>
                 <div class="navVerticalDivider"></div>
-                <li class="nav-item"><a class="nav-link " href="">Explore</a> </li>
-                <li class="nav-item"><a class="nav-link" href="">Search</a> </li>
+                <li class="nav-item"><a class="nav-link " href="/explore">Explore</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/search">Search</a> </li>
             </ul>
-            <!--
-            <input type="text" id="txtSearch" class="form-control mr-sm-2" placeholder="Search movie...">           
-            <button id="btnSearch" class="btn btn-outline-secondary" type="submit">Search</button>
-            -->
             <% if (!userLoggedIn) { %>
                 <ul class="nav navbar-nav navbar-right">
                     <button id="btnLogin" class="btn btn-link" type="submit">Login</button>
@@ -23,11 +21,9 @@
                         <li>
                             <div class="container">
                                 <div class="dropdown">
-                                    <img class="btn dropdown-toggle" width="50px" style="cursor: pointer;" src="../images/profile-placeholder.png" alt="dropdown image" data-toggle="dropdown">
+                                    <img class="btn dropdown-toggle btnDropdown" style="cursor: pointer;" src="../images/profile-placeholder.png" alt="dropdown image" data-toggle="dropdown">
                                     <ul class="dropdown-menu">
                                         <li><a id="btnProfile" class="btn btn-link" href="/profile">Profile</a></li>
-                                        <li><a id="btnWatchlist" class="btn btn-link" href="/watchlist">Watchlist</a></li>
-                                        <li><a id="btnSeen" class="btn btn-link" href="/seen">Seen</a></li>
                                         <li><button id="btnSignOut" class="btn btn-link">Sign Out</button></li>
                                     </ul>
                                 </div>

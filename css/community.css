@@ -1,0 +1,44 @@
+.userPhoto {
+    width: 130px;
+    height: 130px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    margin: 10px auto;
+  }
+  
+  .userContainer {
+      position: relative;
+      display: inline-block;
+      width: 320px;
+      height: 220px;
+      padding: 8px;
+      border-radius: 3px;
+      background: #ffffff;
+      margin: 6px;
+      box-shadow: 0px 2px 7px 1px rgba(161,161,161,0.63);
+      background: linear-gradient(to bottom, rgba(150,150,150,0.29) 0%,rgba(150,150,150,0.05) 22%,rgba(139,139,139,0) 27%,rgba(0,0,0,0) 89%);
+  }
+
+  .userContainer:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  
+  .usersContainer {
+      display: flex;
+      flex-flow: row wrap;
+  }
+  
+  .userName {
+      word-wrap: break-word !important;
+      color: #006ea1;
+  }
+  
+  .userInfo {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  

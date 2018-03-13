@@ -6,6 +6,13 @@
 
     <% include ../partials/head %>
         <link rel="stylesheet" type="text/css" href="../css/movies.css">
+
+    <style type="text/css">
+        .searchBtn {
+            margin-left: 5px;
+            height: 33px; 
+        }
+    </style>
 </head>
 
 <body>
@@ -13,7 +20,14 @@
     <% include ../partials/navbar %>
         <div class="mainContainer">
             <h4 class="pageTitle">
-                <span class="fa fa-inbox titleIcon"></span>Recommendations</h4>
+                <span class="fa fa-search titleIcon"></span>Search</h4>
+                <div class="form-group">                   
+                        <input type="text" class="form-control" style="display: inline; width:400px;" placeholder="Enter a movie title.." /> 
+                        <button type="submit" class="btn btn-primary searchBtn">Search movie</button> 
+                        <button type="submit" class="btn btn-primary searchBtn">Search similar movies</button>         
+                    </div>
+                    
+                    <!-- search results -->
             <div class="moviesContainer">
                 <div class="content movieContainer">
                     <div class="movieCover" style="background-image: url(https://static.highsnobiety.com/wp-content/uploads/2017/08/24235415/blade-runner-2049-official-poster-001-480x740.jpg)">
@@ -32,6 +46,8 @@
             </div>
 
         </div>
+
+
 
 </body>
 

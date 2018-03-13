@@ -72,3 +72,11 @@ button:hover {
 .pageTitle {
     margin: 15px;
 }
+.btnDropdown {
+    border-radius: 100%;
+    width: 55px;
+}
+.blueText {
+    color: #006ea1;
+    font-weight: bold;
+}

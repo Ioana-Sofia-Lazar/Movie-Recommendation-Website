@@ -6,17 +6,18 @@
 
     <% include ../partials/head %>
         <link rel="stylesheet" type="text/css" href="../css/profile.css">
+        
 </head>
 
 <body>
 
     <% include ../partials/navbar %>
-        <div class="mainContainer">
+      
             <div class="content-profile-page">
                 <div class="profile-user-page card">
                    <div class="img-user-profile">
              
-                     <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(http://www.palazzodellemisture.it/wp-content/uploads/2017/01/placeholder.jpg)">   
+                     <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(../images/cover1.png)">   
                          <button id="btnEditProfile" class="btn btn-primary edit-profile">Edit Profile...</button>
                      </div>
              
@@ -34,12 +35,12 @@
                      <li><a href="/profile/watchlist">Watchlist</a></li>
                      <li><a href="/profile/seen">Seen</a></li>
                     </ul>
-                  
+                  <div style="margin: 20px">
             <%- include('../partials/' + profilePage + '.ejs') %>
-             
-                  </div>
-                 </div>
         </div>
+                  </div>
+          </div>
+              
 
 
 </body>

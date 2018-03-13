@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <% include ../partials/head %>
+        <link rel="stylesheet" type="text/css" href="../css/explore.css">
+</head>
+
+<body>
+
+    <% include ../partials/navbar %>
+        <div class="mainContainer">
+            <!-- by genre -->
+            <h4 class="pageTitle">
+                <span class="fa fa-chevron-circle-right titleIcon"></span>Movies by Genre</h4>
+            <div class="typesContainer">
+                <% genres.forEach(function(genre) { %>
+                    <a href="explore/byCategory?genre=<%= genre.name.toLowerCase() %>">
+                        <div class="content typeContainer">
+                            <div class="typeCover" style="background-image: url(../images/genres/<%= genre.photo %>)">
+                            </div>
+                            <h5 class="typeTitle">
+                                <%= genre.name %>
+                            </h5>
+                        </div>
+                    </a>
+                    <% }); %>
+            </div>
+
+            <!-- by time periods -->
+            <h4 class="pageTitle">
+                    <span class="fa fa-chevron-circle-right titleIcon"></span>Movies by Time Periods</h4>
+                <div class="typesContainer">
+                    <% periods.forEach(function(period) { %>
+                        <a href="explore/byCategory?period=<%= period.name.toLowerCase() %>">
+                            <div class="content typeContainer">
+                                <div class="typeCover" style="background-image: url(../images/periods/<%= period.photo %>)">
+                                </div>
+                                <h5 class="typeTitle">
+                                    <%= period.name %>
+                                </h5>
+                            </div>
+                        </a>
+                        <% }); %>
+                </div>
+
+        </div>
+
+
+</body>
+
+</html>

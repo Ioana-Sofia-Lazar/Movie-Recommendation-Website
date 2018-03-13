@@ -23,6 +23,7 @@
     /* make hovered input's following siblings grey on hover */
     /* make none icon grey on rating group hover */
     /* make none icon red on hover */
+    margin-left: 10px;
   }
   #half-stars-example .rating-group {
     display: inline-flex;
@@ -38,7 +39,7 @@
     cursor: pointer;
     /* if you change the left/right padding, update the margin-right property of .rating__label--half as well. */
     padding: 0 0.1em;
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
   #half-stars-example .rating__label--half {
     padding-right: 0;
