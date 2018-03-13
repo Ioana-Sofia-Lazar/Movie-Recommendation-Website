@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <% include ../partials/head %>
+        <link rel="stylesheet" type="text/css" href="../css/profile.css">
+</head>
+
+<body>
+
+    <% include ../partials/navbar %>
+        <div class="mainContainer">
+            <div class="content-profile-page">
+                <div class="profile-user-page card">
+                   <div class="img-user-profile">
+             
+                     <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(http://www.palazzodellemisture.it/wp-content/uploads/2017/01/placeholder.jpg)">   
+                         <button id="btnEditProfile" class="btn btn-primary edit-profile">Edit Profile...</button>
+                     </div>
+             
+                     <div class="avatar-container">
+                         <img id="imgProfile" class="avatar" src="../images/profile-placeholder.png"/>        
+                     </div>
+             
+                        </div>
+                       <div class="user-profile-data">
+                         <h1 id="userName" runat="server">Jose Pino</h1>
+                       </div> 
+             
+                    <ul class="data-user">
+                     <li><a href="/profile">About</a></li>
+                     <li><a href="/profile/watchlist">Watchlist</a></li>
+                     <li><a href="/profile/seen">Seen</a></li>
+                    </ul>
+                  
+            <%- include('../partials/' + profilePage + '.ejs') %>
+             
+                  </div>
+                 </div>
+        </div>
+
+
+</body>
+
+</html>

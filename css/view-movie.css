@@ -1,0 +1,56 @@
+#movieHeader {
+    position: fixed;
+    background: #ffffff;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    width: 80%;
+    left: 0;
+    right: 0;
+    top: 50px;
+    margin: auto;
+    padding: 15px;
+}
+
+#movieOptions {
+    float: right;
+    margin-right: 15px;
+}
+
+.mainContainer {
+    padding: 0px;
+    margin-top: 130px;
+}
+
+#movieTitle {
+    display: inline;
+
+}
+
+.movieCover {
+    width: 300px;
+    height: 450px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+
+  .leftSide {
+      width: 30%;
+      float: left;
+  }
+
+  .rightSide {
+    width: 70%;
+    float: right;
+  }
+
+  #movieDescription {
+      font-size: 1.1rem;
+  }
+
+  .optionButtonActive {
+    color: #007cad;
+  }
