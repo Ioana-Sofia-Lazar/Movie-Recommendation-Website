@@ -1,6 +1,8 @@
 // load
 var express = require('express');
 var app = express();
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');

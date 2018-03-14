@@ -56,9 +56,8 @@ button:hover {
     margin-bottom: 0.2rem;
 }
 .disabledLink {
-    pointer-events: none;
-   cursor: default;
-   color: rgb(92, 92, 92);
+   cursor: not-allowed;
+   color: rgb(88, 88, 88) !important;
 }
 #btnNotifications {
     height: 34px;
