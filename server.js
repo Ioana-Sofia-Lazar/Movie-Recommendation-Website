@@ -1,20 +1,65 @@
-// load
-var express = require('express');
-var app = express();
+// extermal modules
+const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
+const dotenv = require('dotenv').config();
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+// app modules
+const db = require('./db.js');
+const User = require('./DAOs/User.js');
+
+// app variables
+const app = express();
+const sessionStore = new MySQLStore({}, db);
+
+// DAOs
+const user = new User(db);
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('views', './pages');
 app.use(express.static("."));
 
+// middlewares
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: process.env.COOKIE_SECRET,
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+
+        return done(null, user);
+    }
+));
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    // to do
+    done(err, user);
+});
+
+
 var params = {
     userLoggedIn: true,
     movieInWatchlist: true,
     movieSeen: false,
     profilePage: "",
-    genres: [   
+    genres: [
         {
             name: 'Comedy',
             photo: 'comedy.jpg'
@@ -64,8 +109,8 @@ var params = {
             photo: 'comedy.jpg'
         }
 
-    ], 
-    periods: [   
+    ],
+    periods: [
         {
             name: '1970s',
             photo: 'comedy.jpg'
@@ -75,7 +120,7 @@ var params = {
 
 
 // index page 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.render('index', params);
 });
 
@@ -135,5 +180,5 @@ app.get('/profile/seen', (req, res) => {
     res.render('profile', params);
 });
 
-app.listen(8000);
+app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
 
