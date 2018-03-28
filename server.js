@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const dotenv = require('dotenv').config();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const bcrypt = require('bcrypt');
 
 // app modules
 const db = require('./db.js');
@@ -102,9 +103,15 @@ app.use((req, res, next) => {
 });
 
 app.post('/login', async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    // validation
+
+
     let creds = {
-        email: req.body.email,
-        password: req.body.password
+        email: email,
+        password: password
     }
 
     let result = 0;
@@ -113,6 +120,7 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         // TODO error page
         res.send(`An error occured: ${err}`);
+        return;
     }
 
     if (result) {
@@ -129,6 +137,37 @@ app.post('/logout', (req, res) => {
         res.redirect('/');
     } else {
         res.redirect('/login');
+    }
+});
+
+app.post('/register', async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    let confirm_password = req.body.confirm_password;
+
+    // validation
+
+    let info = {
+        email: email,
+        password: password
+    }
+    let result = 0;
+    
+    try {
+        result = await user.register(info);
+    } catch (err) {
+        // TODO error page
+        res.send(`An error occured: ${err}`);
+        return;
+    }
+
+    if (result) {
+        req.session.user_id = result.insertId;
+        // TODO redirect to profile setup
+        res.redirect('/');
+    } else {
+        // redirect back to register page
+        res.send('Registration failed!');
     }
 });
 
