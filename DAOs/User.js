@@ -2,17 +2,28 @@ class User {
     constructor(db) {
         this.db = db;
     }
-    
-    register(info) { 
-        console.log('User registered!'); 
+
+    register(info) {
+        console.log('User registered!');
     }
-    
+
     login(creds) {
-        console.log('User logged in!'); 
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM user WHERE email = ? AND password = ?',
+                [creds.email, creds.password],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve(results[0].id);
+                });
+
+        });
     }
-    
-    logout(info) { 
-        console.log('User logged out!'); 
+
+    logout(info) {
+        console.log('User logged out!');
     }
 }
 

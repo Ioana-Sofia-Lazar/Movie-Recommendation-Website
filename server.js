@@ -5,8 +5,6 @@ const fetch = require('node-fetch');
 const dotenv = require('dotenv').config();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
 // app modules
 const db = require('./db.js');
@@ -33,26 +31,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-// passport config
-passport.use(new LocalStrategy(
-    function (username, password, done) {
-
-        return done(null, user);
-    }
-));
-
-passport.serializeUser(function (user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-    // to do
-    done(err, user);
-});
-
 
 var params = {
     userLoggedIn: true,
@@ -118,9 +96,45 @@ var params = {
     ]
 };
 
+app.use((req, res, next) => {
+    console.log(JSON.stringify(req.session));
+    next();
+});
+
+app.post('/login', async (req, res) => {
+    let creds = {
+        email: req.body.email,
+        password: req.body.password
+    }
+
+    let result = 0;
+    try {
+        result = await user.login(creds);
+    } catch (err) {
+        // TODO error page
+        res.send(`An error occured: ${err}`);
+    }
+
+    if (result) {
+        req.session.user_id = result;
+        res.redirect('/');
+    } else {
+        res.send('Invalid username or password');
+    }
+});
+
+app.post('/logout', (req, res) => {
+    if (req.session.user_id) {
+        req.session.destroy();
+        res.redirect('/');
+    } else {
+        res.redirect('/login');
+    }
+});
 
 // index page 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
+    params.userLoggedIn = req.session.user_id;
     res.render('index', params);
 });
 
