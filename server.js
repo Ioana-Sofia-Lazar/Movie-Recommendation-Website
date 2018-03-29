@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 // app modules
 const db = require('./db.js');
 const User = require('./DAOs/User.js');
+const OMDb = require('./APIs/OMDb.js');
 
 // app variables
 const app = express();
@@ -17,6 +18,9 @@ const sessionStore = new MySQLStore({}, db);
 
 // DAOs
 const user = new User(db);
+
+// APIs
+const omdb = new OMDb(process.env.OMDB_KEY);
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -32,6 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
 
 var params = {
     userLoggedIn: true,
@@ -97,9 +102,14 @@ var params = {
     ]
 };
 
-app.use((req, res, next) => {
-    console.log(JSON.stringify(req.session));
-    next();
+// app.use((req, res, next) => {
+//     console.log(JSON.stringify(req.session));
+//     next();
+// });
+
+app.get('/test', async (req, res) => {
+    let result = await omdb.getMovieById('tt1285016');
+    res.send(result);
 });
 
 app.post('/login', async (req, res) => {
