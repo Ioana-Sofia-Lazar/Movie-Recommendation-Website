@@ -102,10 +102,10 @@ var params = {
     ]
 };
 
-// app.use((req, res, next) => {
-//     console.log(JSON.stringify(req.session));
-//     next();
-// });
+app.use((req, res, next) => {
+    console.log(JSON.stringify(req.session));
+    next();
+});
 
 app.get('/test', async (req, res) => {
     let result = await omdb.getMovieById('tt1285016');
@@ -154,12 +154,22 @@ app.post('/register', async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     let confirm_password = req.body.confirm_password;
+    let fname = req.body.fname;
+    let lname = req.body.lname;
+    let dob = req.body.dob;
+    let gender = req.body.gender;
+    let description = req.body.description;
 
-    // validation
+    // validation & processing
 
     let info = {
         email: email,
-        password: password
+        password: password,
+        fname: fname,
+        lname: lname,
+        dob: dob,
+        gender: gender,
+        description: description
     }
     let result = 0;
     
@@ -172,7 +182,7 @@ app.post('/register', async (req, res) => {
     }
 
     if (result) {
-        req.session.user_id = result.insertId;
+        req.session.user_id = result;
         // TODO redirect to profile setup
         res.redirect('/');
     } else {

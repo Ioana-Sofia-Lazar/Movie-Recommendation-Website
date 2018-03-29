@@ -15,14 +15,15 @@ class User {
 
                 console.log(`pw ${info.password} hash ${hash}`);
 
-                this.db.query('INSERT INTO user (email, password) VALUES (?, ?)',
-                    [info.email, hash],
+                this.db.query('SELECT register(?,?,?,?,?,?,?) AS insert_id',
+                    [info.email, hash, info.fname, info.lname, info.dob, info.gender, info.description],
                     (err, results) => {
                         if (err) {
                             reject(err);
                             return;
                         }
-                        resolve(results);
+
+                        resolve(results[0].insert_id);
                     });
             });
         });
