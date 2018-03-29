@@ -1,15 +1,20 @@
 // extermal modules
-const express = require('express');
+const express    = require('express');
 const bodyParser = require('body-parser');
-const fetch = require('node-fetch');
-const dotenv = require('dotenv').config();
-const session = require('express-session');
+const fetch      = require('node-fetch');
+const dotenv     = require('dotenv').config();
+const session    = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const bcrypt = require('bcrypt');
+const bcrypt     = require('bcrypt');
 
-// app modules
-const db = require('./db.js');
-const User = require('./DAOs/User.js');
+// DAO modules
+const db        = require('./db.js');
+const User      = require('./DAOs/User.js');
+const Profile   = require('./DAOs/Profile.js');
+const Seen      = require('./DAOs/Seen.js');
+const Watchlist = require('./DAOs/Watchlist.js');
+
+// API modules
 const OMDb = require('./APIs/OMDb.js');
 
 // app variables
@@ -17,7 +22,10 @@ const app = express();
 const sessionStore = new MySQLStore({}, db);
 
 // DAOs
-const user = new User(db);
+const user      = new User(db);
+const profile   = new Profile(db);
+const seen      = new Seen(db);
+const watchlist = new Watchlist(db);
 
 // APIs
 const omdb = new OMDb(process.env.OMDB_KEY);
