@@ -205,6 +205,13 @@ app.get('/', (req, res) => {
     res.render('index', params);
 });
 
+// search page
+app.get('/search/:title', async (req, res) => {
+    let title = req.params.title;
+    let data = await omdb.getMovieByTitle(title);
+    res.render('search', data);
+});
+
 // recommendations
 app.get('/recommendations', (req, res) => {
     res.render('recommendations', params);
@@ -216,8 +223,19 @@ app.get('/viewMovie', (req, res) => {
 });
 
 // watchlist (can also be viewed outside profile page)
-app.get('/watchlist', (req, res) => {
-    res.render('watchlist', params);
+app.get('/watchlist', async (req, res) => {
+    let watchlist = await watchlist.getListById(req.session.user_id);
+    let movie_data = [];
+    watchlist.forEach(async (movie_id) => {
+        let raw_data = await omdb.getMovieById(movie_id);
+        // trim response to contain only required fields, not mandatory
+        // let data = {
+        //     id: raw_data.id,
+        //     poster: ...
+        // }
+        movie_data.push();
+    });
+    res.render('watchlist', { movie_data: movie_data });
 });
 
 // seen movies (can also be viewed outside profile page)
