@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route('/similarToMovie')
 @requires_token
 def get():
-	imdb_id = request.args.get('id')
+	imdb_id = request.args.get('id').lstrip('t').lstrip('0')
 	num = request.args.get('num', default=10)
 	movies = get_similar_movies(imdb_id, num)
 

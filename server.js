@@ -17,6 +17,7 @@ const Watchlist = require('./DAOs/Watchlist.js');
 
 // API modules
 const OMDb = require('./APIs/OMDb.js');
+const RSAPI = require('./APIs/RSAPI.js');
 
 // app variables
 const app = express();
@@ -30,6 +31,7 @@ const watchlist = new Watchlist(db);
 
 // APIs
 const omdb = new OMDb(process.env.OMDB_KEY);
+const rs = new RSAPI('192.168.1.4');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -58,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/test', async (req, res) => {
-    let result = await omdb.getMovieById('tt1285016');
+    let result = await rs.getSimilarMoviesById('tt1285016');
     res.send(result);
 });
 
