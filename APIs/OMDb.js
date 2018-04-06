@@ -12,7 +12,7 @@ class OMDb {
     }
 
     getMovieByTitle(title) {
-        return fetch(`${this.url}t=${urlencode(title)}`)
+        return fetch(`${this.url}t=${encodeURIComponent(title)}`)
             .then(res => res.json())
             .catch(err => console.log(err))
     }

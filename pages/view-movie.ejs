@@ -2,45 +2,76 @@
 <html>
 
 <head>
-    <title>Home</title>
+        <title>Home</title>
 
-    <% include ../partials/head %>
-        <link rel="stylesheet" type="text/css" href="../css/view-movie.css">
+        <% include ../partials/head %>
+                <link rel="stylesheet" type="text/css" href="../css/view-movie.css">
 </head>
 
 <body>
         <div class="container mainContainer">
                 <div class="leftSide">
-                        <div class="movieCover" style="background-image: url(https://static.highsnobiety.com/wp-content/uploads/2017/08/24235415/blade-runner-2049-official-poster-001-480x740.jpg)">
+                        <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
                         </div>
                 </div>
                 <div class="rightSide">
-                    <p id="movieDescription">
-                        Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.
-                    </p>    
-                    <div class="infoCard">
-                            <p><strong>Director:</strong> Denis Villeneuve</p>
-                            <p><strong>Writer:</strong> Hampton Fancher, Michael Green</p>
-                            <p><strong>Runtime:</strong> 163 min</p>
-                            <p><strong>Release Date:</strong> October 4, 2017</p>
-                            <p><strong>Main Cast:</strong> Harrison Ford, Ryan Gosling, Jared Leto, Robin Wright, Dave Bautista, Ana de Armas, Sylvia Hoeks, Mackenzie Davis</p>    
-                    </div>
+                        <p id="movieDescription">
+                                <%= movieData.Plot %>
+                        </p>
+                        <div class="infoCard">
+                                <p>
+                                        <strong>Genre:</strong>
+                                        <%= movieData.Genre %>
+                                </p>
+                                <p>
+                                        <strong>Director:</strong>
+                                        <%= movieData.Director %>
+                                </p>
+                                <p>
+                                        <strong>Writer:</strong>
+                                        <%= movieData.Writer %>
+                                </p>
+                                <p>
+                                        <strong>Production:</strong>
+                                        <%= movieData.Production %>
+                                </p>
+                                <p>
+                                        <strong>Runtime:</strong>
+                                        <%= movieData.Runtime %>
+                                </p>
+                                <p>
+                                        <strong>Release Date:</strong>
+                                        <%= movieData.Released %>
+                                </p>
+                                <p>
+                                        <strong>Main Cast:</strong>
+                                        <%= movieData.Actors %>
+                                </p>
+                        </div>
                 </div>
         </div>
 
-<!-- movie title -->
+        <!-- movie title -->
         <div id="movieHeader">
-                <h2 id="movieTitle">Blade Runner</h2>
+                <h2 id="movieTitle">
+                        <%= movieData.Title %>
+                </h2>
+                <% if (userLoggedIn) { %>
                 <div id="movieOptions">
-                        <button type="button" class="btn btn-default optionButton <% if(movieInWatchlist) { %> optionButtonActive <% } %>">
-                                <span class="fa fa-bookmark buttonIcon"></span>Watchlist
-                            </button>
-                            <button type="button" class="btn btn-default optionButton <% if(movieSeen) { %> optionButtonActive <% } %>">
-                                    <span class="fa fa-check buttonIcon"></span>Seen
+                        <a href="/addToWatchlist?movieId=<%= movieData.imdbID %>">
+                                <button type="button" class="btn btn-default optionButton <% if (movieData.isInWatchlist) { %> optionButtonActive <% } %>">
+                                        <span class="fa fa-bookmark buttonIcon"></span>Watchlist
                                 </button>
+                        </a>
+                        <a href="/addToSeen?movieId=<%= movieData.imdbID %>">
+                                <button type="button" class="btn btn-default optionButton <% if (movieData.isInSeen) { %> optionButtonActive <% } %>">
+                                        <span class="fa fa-check buttonIcon"></span>Seen
+                                </button>
+                        </a>
                 </div>
-            </div>
-            <% include ../partials/navbar %>
+                <% } %>
+        </div>
+        <% include ../partials/navbar %>
 
 </body>
 

@@ -79,3 +79,21 @@ button:hover {
     color: #006ea1;
     font-weight: bold;
 }
+.centered-container-small {
+    position: relative;
+    margin: 0 auto;
+    width: 75em;
+    background: #fff;
+    border-radius: 0.3rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    border: .1em solid rgba(0, 0, 0, 0.2);
+    padding: 10px 40px;
+    width: 30em;
+}
+.errorMessage {
+    color: red;
+    text-align: center;
+}
+.optionButtonActive {
+    color: #007cad;
+  }

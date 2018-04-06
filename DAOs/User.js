@@ -29,6 +29,25 @@ class User {
         });
     }
 
+    emailAlreadyInUse(email) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM user WHERE email = ?',
+                [email],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    if (results[0]) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                });
+        });
+    }
+
     login(creds) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id, password FROM user WHERE email = ?',

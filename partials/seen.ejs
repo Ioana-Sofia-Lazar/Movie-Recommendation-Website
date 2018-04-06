@@ -1,12 +1,23 @@
 <div class="moviesContainer">
-        <div class="content movieContainer">
-            <span class="fa fa-ban removeIcon"></span>
-            <div class="movieCover" style="background-image: url(https://static.highsnobiety.com/wp-content/uploads/2017/08/24235415/blade-runner-2049-official-poster-001-480x740.jpg)">
-            </div>
-            <h5 class="movieTitle">Blade Runner</h5>
-            <div class="watchlistMovieOptions">
-                <%- include rating %>    
-            </div>
-        </div>
-        
-    </div>
+    <% if (locals.moviesData) {
+            if (moviesData.length == 0) { %>
+
+        <p>Nothing to show yet.</p>
+
+        <% } else {
+            for(var i = 0; i < moviesData.length; i++) {
+                let movie = moviesData[i]; %>
+            <a href="/viewMovie?movieId=<%= movie.imdbID %>">
+                <div class="content movieContainer">
+                    <span class="fa fa-ban removeIcon"></span>
+                    <div class="movieCover" style="background-image: url(<%= movie.Poster %>)"></div>
+                    <h5 class="movieTitle">
+                        <%= movie.Title %>
+                    </h5>
+                    <div class="watchlistMovieOptions">
+                        <%- include rating %>
+                    </div>
+                </div>
+            </a>
+            <% }}} %>
+</div>

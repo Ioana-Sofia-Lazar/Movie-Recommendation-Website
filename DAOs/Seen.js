@@ -18,6 +18,36 @@ class Seen {
         });
     }
 
+    userHasMovie(info) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT movie_id FROM seen WHERE user_id = ? and movie_id = ?',
+                [info.user_id, info.movie_id],
+                (err, results) => { 
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    results[0] ? resolve(true) : resolve(false);
+                });
+        });
+    }
+
+    getRating(user_id, movie_id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT rating FROM seen WHERE user_id = ? AND movie_id = ?',
+                [user_id, movie_id],
+                (err, results) => { 
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    results[0] ? resolve(results[0]) : resolve(0);
+                });
+        });
+    }
+
     addToSeen(info) {
         return new Promise((resolve, reject) => {
             this.db.query('INSERT INTO seen (user_id, movie_id, rating) VALUES (?,?,?)',

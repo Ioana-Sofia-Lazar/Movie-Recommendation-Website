@@ -1,7 +1,9 @@
 <div class="about-container">
+        <% if (locals.userInfo && !(userInfo.description === "")) { %>
     <p id="userDescription" runat="server" class="about-description">
-        This is user's description. Very interesting bla bla..
+            <%= userInfo.description %>
     </p>
+    <% } %>
     <div class="align-right">
         <p>Name:</p>
         <p>Gender:</p>
@@ -9,9 +11,11 @@
     </div>
     <div class="align-left">
         <strong>
-            <p>Mr Potato</p>
-            <p>Unspecified</p>
-            <p>1990-01-01</p>
+            <% if (locals.userInfo) { %>
+            <p><%= userInfo.fname + ' ' + userInfo.lname %></p>
+            <p><%= userInfo.gender %></p>
+            <p><%= dateformat(userInfo.dob, 'yyyy, mmmm dS') %></p>
+            <% } %>
         </strong>
     </div>
 </div>

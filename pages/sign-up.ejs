@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <% include ../partials/head %>
+        <link rel="stylesheet" type="text/css" href="../css/modal-form.css">
+</head>
+
+<body>
+
+    <a href="/"><img src="../images/logo2.png" width="100px" style="display: block; margin: 20px auto;"></a>
+    <div class="centered-container-small">
+
+        <!-- header -->
+        <div class="modal-header" style="padding:4px;">
+            <h3 class="modal-title">Sign Up</h3>
+        </div>
+
+        <form role="form" id="signUpForm" method="POST" action="/register" onsubmit="return validateForm()" style="margin-top:10px;">
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required="">
+                <input type="password" name="password" class="form-control" style="margin-top: 8px;" placeholder="Password" required="">
+                <input type="password" name="confirm_password" class="form-control" style="margin-top: 8px;" placeholder="Confirm Password"
+                    required="">
+                <input type="text" name="fname" class="form-control" style="margin-top: 8px;" placeholder="First Name" required="" value="<%= locals.filledInfo ? filledInfo.fname : '' %>">
+                <input type="text" name="lname" class="form-control" style="margin-top: 8px;" placeholder="Last Name" required="" value="<%= locals.filledInfo ? filledInfo.lname : '' %>">
+                <label style="margin-top: 8px;">Date of Birth:</label>
+                <input type="date" class="form-control" name="dob" max='2013-01-31' required value="<%= locals.filledInfo ? filledInfo.dob : '' %>">
+                <label style="margin-top: 8px;">Gender</label>
+                <input type="radio" name="gender" style="margin: 8px;" value="male" <%= (locals.filledInfo && filledInfo.gender === 'male') ? 'checked' : '' %>>Male
+                <input type="radio" name="gender" style="margin: 8px;" value="female" <%= (locals.filledInfo && filledInfo.gender === 'female') ? 'checked' : '' %>>Female
+                <input type="radio" name="gender" style="margin: 8px;" value="other" <%= (locals.filledInfo && filledInfo.gender === 'other') ? 'checked' : '' %>>Other
+            </div>
+
+            <!-- footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
+            </div>
+            <p id="errorMessage" class="errorMessage"> <%= locals.signUpError ? signUpError : '' %> </p>
+        </form>
+
+    </div>
+
+    <script>
+            function validateForm() {
+                let password = document.getElementsByName("password")[0].value;
+                let confirmPassword = document.getElementsByName("confirm_password")[0].value;
+                let error = document.getElementById("errorMessage");
+                if (!(password === confirmPassword)) {
+                    error.innerHTML = "Passwords do not match.";
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            </script>
+
+</body>
+
+</html>

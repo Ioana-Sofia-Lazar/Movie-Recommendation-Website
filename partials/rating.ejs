@@ -1,26 +1,168 @@
-<div id="half-stars-example">
+<div class="rating" data-vote="0">
+
+                <div class="star hidden">
+                  <span class="full"data-value="0"></span>
+                  <span class="half"data-value="0"></span>
+                </div>
+              
+                <div class="star">
+              
+                  <span class="full" data-value="1"></span>
+                  <span class="half" data-value="0.5"></span>
+                  <span class="selected"></span>
+              
+                </div>
+              
+                <div class="star">
+              
+                  <span class="full" data-value="2"></span>
+                  <span class="half" data-value="1.5"></span>
+                  <span class="selected"></span>
+              
+                </div>
+              
+                <div class="star">
+              
+                  <span class="full" data-value="3"></span>
+                  <span class="half" data-value="2.5"></span>
+                  <span class="selected"></span>
+              
+                </div>
+              
+                <div class="star">
+              
+                  <span class="full" data-value="4"></span>
+                  <span class="half" data-value="3.5"></span>
+                  <span class="selected"></span>
+              
+                </div>
+              
+                <div class="star">
+              
+                  <span class="full" data-value="5"></span>
+                  <span class="half" data-value="4.5"></span>
+                  <span class="selected"></span>
+              
+                </div>
+              
+        
+              </div>
+
+              <script>
+                        var starClicked = false;
+
+                        $(function() {
+                        
+                          $('.star').click(function() {
+                        
+                            $(this).children('.selected').addClass('is-animated');
+                            $(this).children('.selected').addClass('pulse');
+                        
+                            var target = this;
+                        
+                            setTimeout(function() {
+                              $(target).children('.selected').removeClass('is-animated');
+                              $(target).children('.selected').removeClass('pulse');
+                            }, 1000);
+                        
+                            starClicked = true;
+                          })
+                        
+                          $('.half').click(function() {
+                            if (starClicked == true) {
+                              setHalfStarState(this)
+                            }
+                            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+                        
+                            $(this).closest('.rating').data('vote', $(this).data('value'));
+                            calculateAverage()
+                            console.log(parseInt($(this).data('value')));
+                        
+                          })
+                        
+                          $('.full').click(function() {
+                            if (starClicked == true) {
+                              setFullStarState(this)
+                            }
+                            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+                        
+                            $(this).find('js-average').text(parseInt($(this).data('value')));
+                        
+                            $(this).closest('.rating').data('vote', $(this).data('value'));
+                            calculateAverage()
+                        
+                            console.log(parseInt($(this).data('value')));
+                          })
+                        
+                          $('.half').hover(function() {
+                            if (starClicked == false) {
+                              setHalfStarState(this)
+                            }
+                        
+                          })
+                        
+                          $('.full').hover(function() {
+                            if (starClicked == false) {
+                              setFullStarState(this)
+                            }
+                          })
+                        
+                        })
+                        
+                        function updateStarState(target) {
+                          $(target).parent().prevAll().addClass('animate');
+                          $(target).parent().prevAll().children().addClass('star-colour');
+                        
+                          $(target).parent().nextAll().removeClass('animate');
+                          $(target).parent().nextAll().children().removeClass('star-colour');
+                        }
+                        
+                        function setHalfStarState(target) {
+                          $(target).addClass('star-colour');
+                          $(target).siblings('.full').removeClass('star-colour');
+                          updateStarState(target)
+                        }
+                        
+                        function setFullStarState(target) {
+                          $(target).addClass('star-colour');
+                          $(target).parent().addClass('animate');
+                          $(target).siblings('.half').addClass('star-colour');
+                        
+                          updateStarState(target)
+                        }
+                        
+                        function calculateAverage() {
+                          var average = 0
+                        
+                          $('.rating').each(function() {
+                            average += $(this).data('vote')
+                          })
+                        
+                          $('.js-average').text((average/ $('.rating').length).toFixed(1))
+                        }
+              </script>
+<!--
     <div class="rating-group">
-        <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio">
-        <label aria-label="0 stars" class="rating__label" for="rating2-0">&nbsp;</label>
-        <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating2-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio">
-        <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-10" value="1" type="radio">
-        <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating2-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio">
-        <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-20" value="2" type="radio">
-        <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating2-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" checked>
-        <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-30" value="3" type="radio">
-        <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating2-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio">
-        <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-40" value="4" type="radio">
-        <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating2-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio">
-        <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-        <input class="rating__input" name="rating2" id="rating2-50" value="5" type="radio">
-    </div>
-</div>
+            <label aria-label="0 stars" class="rating__label" for="rating2-0" >&nbsp;</label>
+            <input class="rating__input rating__input--none" name="rating2" id="rating2-0" value="0" type="radio" <% if (movie.userRating == 0) { %> checked <% } %>>
+            <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating2-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio" <% if (movie.userRating == 0.5) { %> checked <% } %>>
+            <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" <% if (movie.userRating == 1) { %> checked <% } %>>
+            <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating2-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio" <% if (movie.userRating == 1.5) { %> checked <% } %>>
+            <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" <% if (movie.userRating == 2) { %> checked <% } %>>
+            <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating2-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" <% if (movie.userRating == 2.5) { %> checked <% } %>>
+            <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" <% if (movie.userRating == 3) { %> checked <% } %>>
+            <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating2-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio" <% if (movie.userRating == 3.5) { %> checked <% } %>>
+            <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" <% if (movie.userRating == 4) { %> checked <% } %>>
+            <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating2-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio" <% if (movie.userRating == 4.5) { %> checked <% } %>>
+            <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" <% if (movie.userRating == 5) { %> checked <% } %>>
+        </div>-->

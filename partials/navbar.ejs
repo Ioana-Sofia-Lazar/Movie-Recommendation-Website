@@ -1,5 +1,5 @@
 <div class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-left" href="/">LOGO nume</a>
+        <a class="navbar-left" href="/"><img src="../images/logo2.png" height="50px" style="margin-top:5px;"></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a> </li>
@@ -8,13 +8,13 @@
                 <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/seen">Seen</a> </li>
                 <li class="nav-item"><a class="nav-link <% if(!userLoggedIn) { %> disabledLink <% } %>" href="/community">Community</a> </li>
                 <div class="navVerticalDivider"></div>
-                <li class="nav-item"><a class="nav-link " href="/explore">Explore</a> </li>
+                <!-- <li class="nav-item"><a class="nav-link " href="/explore">Explore</a> </li> -->
                 <li class="nav-item"><a class="nav-link" href="/search">Search</a> </li>
             </ul>
             <% if (!userLoggedIn) { %>
                 <ul class="nav navbar-nav navbar-right">
                     <button id="btnLogin" class="btn btn-link" type="button" data-toggle="modal" data-target="#popUpWindow">Login</button>
-                    <button id="btnSignUp" class="btn btn-primary" type="button">Sign Up</button>
+                    <a href="/signUp"><button id="btnSignUp" class="btn btn-primary" type="button">Sign Up</button></a>
                 </ul>
             <%} else { %>
                 <ul class="nav navbar-nav navbar-right">
@@ -24,7 +24,7 @@
                                     <img class="btn dropdown-toggle btnDropdown" style="cursor: pointer;" src="../images/profile-placeholder.png" alt="dropdown image" data-toggle="dropdown">
                                     <ul class="dropdown-menu">
                                         <li><a id="btnProfile" class="btn btn-link" href="/profile">Profile</a></li>
-                                        <li><form action="/logout" method="post"><button id="btnSignOut" class="btn btn-link" type="submit">Sign Out</button></form></li>
+                                        <li><a id="btnSignOut" class="btn btn-link" href="/logout">Sign Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -36,4 +36,6 @@
     </div>
 
     <!-- Login Form -->
-    <%- include modal-form %>
+    <%- include modal-form-login %>  
+    
+

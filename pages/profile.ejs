@@ -17,8 +17,10 @@
                 <div class="profile-user-page card">
                    <div class="img-user-profile">
              
-                     <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(../images/cover1.png)">   
+                     <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(../images/cover1.png)">  
+                        <% if (viewingUserWithId == userLoggedIn) { %> 
                          <button id="btnEditProfile" class="btn btn-primary edit-profile">Edit Profile...</button>
+                         <% } %>
                      </div>
              
                      <div class="avatar-container">
@@ -27,13 +29,13 @@
              
                         </div>
                        <div class="user-profile-data">
-                         <h1 id="userName" runat="server">Jose Pino</h1>
+                         <h1 id="userName" runat="server"><%= (locals.userInfo) ? userInfo.fname + ' ' + userInfo.lname : ''; %></h1>
                        </div> 
              
                     <ul class="data-user">
-                     <li><a href="/profile">About</a></li>
-                     <li><a href="/profile/watchlist">Watchlist</a></li>
-                     <li><a href="/profile/seen">Seen</a></li>
+                     <li><a href="/profile?user=<%= locals.viewingUserWithId ? viewingUserWithId : ''; %>">About</a></li>
+                     <li><a href="/profile/watchlist?user=<%= locals.viewingUserWithId ? viewingUserWithId : ''; %>">Watchlist</a></li>
+                     <li><a href="/profile/seen?user=<%= locals.viewingUserWithId ? viewingUserWithId : ''; %>">Seen</a></li>
                     </ul>
                   <div style="margin: 20px">
             <%- include('../partials/' + profilePage + '.ejs') %>

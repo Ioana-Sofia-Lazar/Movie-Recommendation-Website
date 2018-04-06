@@ -7,12 +7,12 @@
     <% include ../partials/head %>
         <link rel="stylesheet" type="text/css" href="../css/movies.css">
 
-    <style type="text/css">
-        .searchBtn {
-            margin-left: 5px;
-            height: 33px; 
-        }
-    </style>
+        <style type="text/css">
+            .searchBtn {
+                margin-left: 5px;
+                height: 33px;
+            }
+        </style>
 </head>
 
 <body>
@@ -21,33 +21,52 @@
         <div class="mainContainer">
             <h4 class="pageTitle">
                 <span class="fa fa-search titleIcon"></span>Search</h4>
-                <div class="form-group">                   
-                        <input type="text" class="form-control" style="display: inline; width:400px;" placeholder="Enter a movie title.." /> 
-                        <button type="submit" class="btn btn-primary searchBtn">Search movie</button> 
-                        <button type="submit" class="btn btn-primary searchBtn">Search similar movies</button>         
-                    </div>
-                    
-                    <!-- search results -->
-            <div class="moviesContainer">
-                <div class="content movieContainer">
-                    <div class="movieCover" style="background-image: url(https://static.highsnobiety.com/wp-content/uploads/2017/08/24235415/blade-runner-2049-official-poster-001-480x740.jpg)">
-                    </div>
-                    <h5 class="movieTitle">Blade Runner</h5>
-                    <div class="recommendationsMovieOptions">
-                        <button type="button" class="btn btn-default optionButton">
-                            <span class="fa fa-bookmark buttonIcon"></span>Watchlist
-                        </button>
-                        <button type="button" class="btn btn-default optionButton">
-                            <span class="fa fa-check buttonIcon"></span>Seen
-                        </button>
-                    </div>
-                </div>
-
+            <div class="form-group">
+                <input type="text" id="searchInput" name="title" class="form-control" style="display: inline; width:400px;" placeholder="Enter a movie title.."
+                />
+                <button id="searchBtn" type="button" class="btn btn-primary searchBtn">Search movie</button>
+                <button type="submit" class="btn btn-primary searchBtn">Search similar movies</button>
             </div>
+
+            <!-- search results -->
+            <% if (locals.movieData) { %>
+                <div class="moviesContainer">
+                    <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
+                        <div class="content movieContainer">
+                            <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
+                            </div>
+                            <h5 class="movieTitle">
+                                <%= movieData.Title %>
+                            </h5>
+                            <% if (userLoggedIn) { %>
+                            <div class="recommendationsMovieOptions">
+                                <a href="/addToWatchlist?movieId=<%= movieData.imdbID %>">
+                                    <button type="button" class="btn btn-default optionButton <% if (movieData.isInWatchlist) { %> optionButtonActive <% } %>">
+                                        <span class="fa fa-bookmark buttonIcon"></span>Watchlist
+                                    </button>
+                                </a>
+                                <a href="/addToSeen?movieId=<%= movieData.imdbID %>">
+                                    <button type="button" class="btn btn-default optionButton <% if (movieData.isInSeen) { %> optionButtonActive <% } %>">
+                                        <span class="fa fa-check buttonIcon"></span>Seen
+                                    </button>
+                                </a>
+                            </div>
+                            <% } %>
+                        </div>
+                    </a>
+
+                </div>
+                <% } %>
 
         </div>
 
+        <script type="text/javascript">
+            document.getElementById('searchBtn').onclick = () => {
+                let title = document.getElementById('searchInput').value;
 
+                window.location.href = `/search/${title}`;
+            };
+        </script>
 
 </body>
 
