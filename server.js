@@ -59,8 +59,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/test', async (req, res) => {
-    let result = await rs.getSimilarMoviesById('tt1285016');
+app.get('/test/:id', async (req, res) => {
+    let imdb_id = req.params.id;
+    let result = await rs.getSimilarMoviesById(imdb_id);
     res.send(result);
 });
 
