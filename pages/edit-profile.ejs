@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <% include ../partials/head %>
+        <link rel="stylesheet" type="text/css" href="../css/movies.css">
+
+</head>
+
+<body>
+
+    <% include ../partials/navbar %>
+        <div class="centered-container-small" style="padding-top: 60px; margin-bottom: 20px;">
+            <h4 class="pageTitle">Edit profile</h4>
+            <div class="form-group">
+                <form role="form" id="editProfileForm" method="POST" action="/saveProfileChanges" encType="multipart/form-data">
+                    <p>
+                        <label>Profile photo:</label>
+                        <br>
+                        <img id="profilePhoto" src="<%= locals.userInfo.photo ? userInfo.photo : '../images/profile-placeholder.png'%>" height="170px">
+                        <input id="photoFile" class="form-control" type="file" name="photo" accept=".png,.jpg,.jpeg" />
+                    </p>
+                    <p>
+                        <label>First name:</label>
+                        <input type="text" name="fname" class="form-control" style="margin-top: 8px;" placeholder="First Name" required="" value="<%= locals.userInfo ? userInfo.fname : '' %>">
+                    </p>
+                    <p>
+                        <label>Last name:</label>
+                        <input type="text" name="lname" class="form-control" style="margin-top: 8px;" placeholder="Last Name" required="" value="<%= locals.userInfo ? userInfo.lname : '' %>">
+                    </p>
+                    <p>
+                        <label style="margin-top: 8px;">Date of Birth:</label>
+                        <input type="date" class="form-control" name="dob" max='2013-01-31' required value=<%=dateformat(userInfo.dob,
+                            'yyyy-mm-dd') %>>
+                    </p>
+                    <p>
+                        <label style="margin-top: 8px;">Gender:</label>
+                        <input type="radio" name="gender" style="margin: 8px;" value="male" <%=(locals.userInfo && userInfo.gender==='m') ?
+                            'checked' : '' %>>Male
+                        <input type="radio" name="gender" style="margin: 8px;" value="female" <%=(locals.userInfo && userInfo.gender==='f') ?
+                            'checked' : '' %>>Female
+                        <input type="radio" name="gender" style="margin: 8px;" value="other" <%=(locals.userInfo && userInfo.gender==='o') ?
+                            'checked' : '' %>>Other
+                    </p>
+                    <p>
+                        <label>Description:</label>
+                        <textarea rows="4" class="form-control" name="description"><%= (locals.userInfo) ? userInfo.description : '' %></textarea>
+                    </p>
+                    <button class="btn btn-primary btn-block" type="submit">Save</button>
+                </form>
+
+            </div>
+
+        </div>
+
+        <script type="text/javascript">
+            function readURLProfile(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#profilePhoto').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("input[id$='photoFile']").change(function () {
+                readURLProfile(this);
+            });
+
+        </script>
+
+
+
+</body>
+
+</html>

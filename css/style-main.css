@@ -97,3 +97,6 @@ button:hover {
 .optionButtonActive {
     color: #007cad;
   }
+a {
+    text-decoration: none;
+}

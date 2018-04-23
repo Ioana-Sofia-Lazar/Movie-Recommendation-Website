@@ -19,8 +19,8 @@
              
                      <div id="divCoverPhoto" runat="server" class="profile-bgHome" style="background: url(../images/cover1.png)">  
                         <% if (viewingUserWithId == userLoggedIn) { %> 
-                         <button id="btnEditProfile" class="btn btn-primary edit-profile">Edit Profile...</button>
-                         <% } %>
+                         <a href="/editProfile"><button id="btnEditProfile" class="btn btn-primary edit-profile">Edit Profile...</button></a>
+                        <% } %>
                      </div>
              
                      <div class="avatar-container">

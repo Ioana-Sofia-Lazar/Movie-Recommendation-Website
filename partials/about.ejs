@@ -13,7 +13,10 @@
         <strong>
             <% if (locals.userInfo) { %>
             <p><%= userInfo.fname + ' ' + userInfo.lname %></p>
-            <p><%= userInfo.gender %></p>
+            <% let gender = 'other';
+                if (userInfo.gender === 'm') gender = 'male';
+                if (userInfo.gender === 'f') gender = 'female'; %>
+            <p><%= gender %></p>
             <p><%= dateformat(userInfo.dob, 'yyyy, mmmm dS') %></p>
             <% } %>
         </strong>

@@ -20,8 +20,8 @@ class Profile {
 
     updateProfile(info) {
         return new Promise((resolve, reject) => {
-            this.db.query('UPDATE profile SET fname = ?, lname = ?, dob = ?, gender = ?, description = ? WHERE user_id = ?',
-                [info.fname, info.lname, info.dob, info.gender, info.description, info.user_id],
+            this.db.query('UPDATE profile SET fname = ?, lname = ?, dob = ?, gender = ?, description = ?, photo = ? WHERE user_id = ?',
+                [info.fname, info.lname, info.dob, info.gender, info.description, info.photo, info.user_id],
                 (err, results) => { 
                     if (err) {
                         reject(err);

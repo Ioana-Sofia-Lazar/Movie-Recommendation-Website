@@ -7,6 +7,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bcrypt = require('bcrypt');
 const dateformat = require('dateformat');
+const fileUpload = require('express-fileupload');
 
 // DAO modules
 const db = require('./db.js');
@@ -47,6 +48,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+// file upload
+app.use(fileUpload());
 
 var params = {
     userLoggedIn: false,
@@ -323,7 +327,7 @@ app.get('/addToWatchlist', async (req, res) => {
     try {
         result = await watchlist.userHasMovie(info);
     } catch (err) {
-        res.render('error', {errorMessage: `An error occured: ${err}`});
+        res.render('error', { errorMessage: `An error occured: ${err}` });
     }
 
     if (result) {
@@ -332,7 +336,7 @@ app.get('/addToWatchlist', async (req, res) => {
         try {
             result = await watchlist.removeFromSeen(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
     } else {
         // before adding to watchlist, check to see if movie is in seen and remove it if it is
@@ -340,7 +344,7 @@ app.get('/addToWatchlist', async (req, res) => {
         try {
             result = await seen.userHasMovie(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
 
         // if movie is in seen remove it
@@ -348,7 +352,7 @@ app.get('/addToWatchlist', async (req, res) => {
         try {
             result = await seen.removeFromSeen(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
 
         // add to watchlist
@@ -356,7 +360,7 @@ app.get('/addToWatchlist', async (req, res) => {
         try {
             result = await watchlist.addToWatchlist(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
     }
 
@@ -377,7 +381,7 @@ app.get('/addToSeen', async (req, res) => {
     try {
         result = await seen.userHasMovie(info);
     } catch (err) {
-        res.render('error', {errorMessage: `An error occured: ${err}`});
+        res.render('error', { errorMessage: `An error occured: ${err}` });
     }
 
     if (result) {
@@ -386,7 +390,7 @@ app.get('/addToSeen', async (req, res) => {
         try {
             result = await seen.removeFromSeen(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
     } else {
         // before adding to seen check to see if movie is in watchlist and remove it if it is
@@ -394,7 +398,7 @@ app.get('/addToSeen', async (req, res) => {
         try {
             result = await watchlist.userHasMovie(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
 
         // if movie is in watchlist remove it
@@ -402,7 +406,7 @@ app.get('/addToSeen', async (req, res) => {
         try {
             result = await watchlist.removeFromWatchlist(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
 
         // add to seen
@@ -411,7 +415,7 @@ app.get('/addToSeen', async (req, res) => {
             info.rating = 0;
             result = await seen.addToSeen(info);
         } catch (err) {
-            res.render('error', {errorMessage: `An error occured: ${err}`});
+            res.render('error', { errorMessage: `An error occured: ${err}` });
         }
     }
 
@@ -486,7 +490,7 @@ app.get('/profile', async (req, res) => {
     try {
         result = await profile.getProfileById(userId);
     } catch (err) {
-        res.render('error', {errorMessage: `An error occured: ${err}`});
+        res.render('error', { errorMessage: `An error occured: ${err}` });
     }
 
     if (result) {
@@ -494,7 +498,7 @@ app.get('/profile', async (req, res) => {
         params.userInfo = result;
         res.render('profile', params);
     } else {
-        res.render('error', {errorMessage: `An error occured while showing profile: ${err}`});
+        res.render('error', { errorMessage: `An error occured while showing profile: ${err}` });
     }
 
 });
@@ -504,7 +508,7 @@ app.get('/profile/watchlist', async (req, res) => {
         res.redirect('/');
         return;
     }
-    
+
     params.profilePage = "watchlist";
 
     // by default show watchlist for current user
@@ -559,6 +563,84 @@ app.get('/profile/seen', async (req, res) => {
     params.moviesData = moviesData;
 
     res.render('profile', params);
+});
+
+app.get('/editProfile', async (req, res) => {
+    if (!params.userLoggedIn) {
+        res.redirect('/');
+        return;
+    }
+
+    // current user's profile info
+    let userId = req.session.user_id;
+
+    let result = 0;
+    try {
+        result = await profile.getProfileById(userId);
+    } catch (err) {
+        res.render('error', { errorMessage: `An error occured: ${err}` });
+    }
+
+    if (result) {
+        params.userInfo = result;
+        res.render('edit-profile', params);
+    } else {
+        res.render('error', { errorMessage: `An error occured while showing profile: ${err}` });
+    }
+});
+
+app.post('/saveProfileChanges', async (req, res) => {
+    if (!params.userLoggedIn) {
+        res.redirect('/');
+        return;
+    }
+
+    let fname = req.body.fname;
+    let lname = req.body.lname;
+    let dob = req.body.dob;
+    let gender = req.body.gender;
+    let description = req.body.description;
+    let photo = params.userInfo.photo;
+
+    // profile photo
+    if (req.files.photo) {
+        var file = req.files.photo;
+        var img_name = file.name;
+        photo = './images/upload_images/' + file.name;
+
+        file.mv(photo, function (err) {
+
+            if (err) return res.status(500).send(err);
+
+        });
+    }
+
+    // processing
+    let info = {
+        user_id: req.session.user_id,
+        fname: fname,
+        lname: lname,
+        dob: dob,
+        gender: gender,
+        description: description,
+        photo: photo
+    }
+    console.log("~saveProfileChanges~ " + JSON.stringify(info));
+
+    let result = 0;
+    try {
+        result = await profile.updateProfile(info);
+    } catch (err) {
+        res.render('error', { errorMessage: `An error occured: ${err}` });
+        return;
+    }
+    // save changes
+    if (result) {
+        res.redirect('/profile');
+    } else {
+        // redirect back to register page
+        res.redirect('/editProfile');
+    }
 });
 
 app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
