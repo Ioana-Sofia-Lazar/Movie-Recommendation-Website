@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <% include ../partials/head %>
+        <link rel="stylesheet" type="text/css" href="../css/modal-form.css">
+</head>
+
+<body>
+
+    <a href="/"><img src="../images/logo2.png" width="100px" style="display: block; margin: 20px auto;"></a>
+    <div class="centered-container-small">
+
+        <!-- header -->
+        <div class="modal-header" style="padding:4px;">
+            <h3 class="modal-title">Login</h3>
+        </div>
+
+        <form role="form" id="signUpForm" method="POST" action="/loginAction" style="margin-top:10px;">
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required="">
+                <input type="password" name="password" class="form-control" style="margin-top: 8px;" placeholder="Password" required="">
+            </div>
+
+            <!-- footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" type="submit">Login</button>
+            </div>
+            <p id="errorMessage" class="errorMessage"> <%= locals.loginError ? loginError : '' %> </p>
+        </form>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -5,7 +5,7 @@ class Profile {
 
     getProfileById(user_id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT fname, lname, dob, gender, description FROM profile WHERE user_id = ?',
+            this.db.query('SELECT fname, lname, dob, photo, gender, description FROM profile WHERE user_id = ?',
                 [user_id],
                 (err, results) => { 
                     if (err) {

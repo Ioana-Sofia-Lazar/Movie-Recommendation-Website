@@ -65,7 +65,11 @@ app.get('/test/:id', async (req, res) => {
     res.send(result);
 });
 
-app.post('/login', async (req, res) => {
+app.get('/login', async (req, res) => {
+    res.render('login', params);
+});
+
+app.post('/loginAction', async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
@@ -80,8 +84,7 @@ app.post('/login', async (req, res) => {
     try {
         result = await user.login(creds);
     } catch (err) {
-        // TODO error page
-        res.send(`An error occured: ${err}`);
+        res.render('error', { errorMessage: `An error occured: ${err}` });
         return;
     }
 
@@ -89,9 +92,10 @@ app.post('/login', async (req, res) => {
         req.session.user_id = result;
         params.userLoggedIn = req.session.user_id;
         params.viewingUserWithId = req.session.user_id;
-        res.redirect('/');
+        res.redirect('/profile');
     } else {
-        res.send('Invalid username or password');
+        params.loginError = "Incorrect email or password.";
+        res.redirect("/login");
     }
 });
 

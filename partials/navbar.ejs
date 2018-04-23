@@ -13,7 +13,7 @@
             </ul>
             <% if (!userLoggedIn) { %>
                 <ul class="nav navbar-nav navbar-right">
-                    <button id="btnLogin" class="btn btn-link" type="button" data-toggle="modal" data-target="#popUpWindow">Login</button>
+                    <a href="/login"><button id="btnLogin" class="btn btn-link" type="button">Login</button></a>
                     <a href="/signUp"><button id="btnSignUp" class="btn btn-primary" type="button">Sign Up</button></a>
                 </ul>
             <%} else { %>
@@ -34,8 +34,5 @@
             <% } %>
         </div>
     </div>
-
-    <!-- Login Form -->
-    <%- include modal-form-login %>  
     
 

@@ -24,7 +24,7 @@
                      </div>
              
                      <div class="avatar-container">
-                         <img id="imgProfile" class="avatar" src="../images/profile-placeholder.png"/>        
+                         <img id="imgProfile" class="avatar" src="<%= (locals.userInfo && userInfo.photo != null) ? userInfo.photo : '../images/profile-placeholder.png' %>"/>        
                      </div>
              
                         </div>
