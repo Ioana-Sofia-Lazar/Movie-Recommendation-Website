@@ -32,6 +32,20 @@ class Profile {
                 });
         });
     }
+
+    getMostActiveUserProfiles() {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT p.* FROM profile p JOIN (SELECT user_id, COUNT(*) AS count FROM seen GROUP BY user_id) s ON (s.user_id = p.user_id) ORDER BY s.count DESC LIMIT 9;',
+                (err, results) => { 
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    results ? resolve(results) : resolve(0);
+                });
+        });
+    }
 }
 
 module.exports = Profile;
