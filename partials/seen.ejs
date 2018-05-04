@@ -9,8 +9,9 @@
                 let movie = moviesData[i]; %>
                 <div class="content movieContainer">
                     <span class="fa fa-ban removeIcon"></span>
-                    <a href="/viewMovie?movieId=<%= movie.imdbID %>"></a>
-                    <div class="movieCover" style="background-image: url(<%= movie.Poster %>)"></div>
+                    <a href="/viewMovie?movieId=<%= movie.imdbID %>">
+                        <div class="movieCover" style="background-image: url(<%= movie.Poster %>)"></div>
+                    </a>
                 </a>
                     <h5 class="movieTitle">
                         <%= movie.Title %>

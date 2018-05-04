@@ -19,7 +19,7 @@
                     <p>
                         <label>Profile photo:</label>
                         <br>
-                        <img id="profilePhoto" src="<%= locals.userInfo.photo ? userInfo.photo : '../images/profile-placeholder.png'%>" height="170px">
+                        <img id="profilePhoto" src="<%= locals.userInfo.photo ? '../images/upload_images/' + userInfo.photo : '../images/profile-placeholder.png'%>" height="170px">
                         <input id="photoFile" class="form-control" type="file" name="photo" accept=".png,.jpg,.jpeg" />
                     </p>
                     <p>
@@ -32,8 +32,7 @@
                     </p>
                     <p>
                         <label style="margin-top: 8px;">Date of Birth:</label>
-                        <input type="date" class="form-control" name="dob" max='2013-01-31' required value=<%=dateformat(userInfo.dob,
-                            'yyyy-mm-dd') %>>
+                        <input type="date" class="form-control" name="dob" max='2013-01-31' required value=<%=locals.dob %>>
                     </p>
                     <p>
                         <label style="margin-top: 8px;">Gender:</label>

@@ -5,7 +5,7 @@
     <title>Home</title>
 
     <% include ../partials/head %>
-        <link rel="stylesheet" type="text/css" href="../css/profile.css">
+    <link rel="stylesheet" type="text/css" href="../css/profile.css">
         
 </head>
 
@@ -24,7 +24,7 @@
                      </div>
              
                      <div class="avatar-container">
-                         <img id="imgProfile" class="avatar" src="<%= (locals.userInfo && userInfo.photo != null) ? userInfo.photo : '../images/profile-placeholder.png' %>"/>        
+                         <img id="imgProfile" class="avatar" src="<%= (locals.userInfo && userInfo.photo != null) ? '../images/upload_images/' + userInfo.photo : '../images/profile-placeholder.png' %>"/>        
                      </div>
              
                         </div>

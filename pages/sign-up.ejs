@@ -38,7 +38,15 @@
             <div class="modal-footer">
                 <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
             </div>
-            <p id="errorMessage" class="errorMessage"> <%= locals.signUpError ? signUpError : '' %> </p>
+            <%
+                if (locals.errors) {
+                    errors.forEach(err => {
+            %>
+                        <p id="errorMessage" class="errorMessage"> <%= err %> </p>
+            <%
+                    });
+                }
+            %>
         </form>
 
     </div>
