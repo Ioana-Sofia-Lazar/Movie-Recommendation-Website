@@ -33,6 +33,21 @@ class Seen {
         });
     }
 
+    rateMovie(user_id, movie_id, rating) {
+        return new Promise((resolve, reject) => {
+            this.db.query('UPDATE seen SET rating = ? WHERE user_id = ? AND movie_id = ?',
+                [rating, user_id, movie_id],
+                (err, results) => { 
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    results[0] ? resolve(results[0]) : resolve(0);
+                });
+        });
+    }
+
     getRating(user_id, movie_id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT rating FROM seen WHERE user_id = ? AND movie_id = ?',

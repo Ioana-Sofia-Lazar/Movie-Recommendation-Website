@@ -2,13 +2,13 @@
 
                 <div class="star hidden">
                   <span class="full"data-value="0"></span>
-                  <span class="half"data-value="0"></span>
+                  <!-- <span class="half"data-value="0"></span> -->
                 </div>
               
                 <div class="star">
               
                   <span class="full" data-value="1"></span>
-                  <span class="half" data-value="0.5"></span>
+                  <!-- <span class="half" data-value="0.5"></span> -->
                   <span class="selected"></span>
               
                 </div>
@@ -16,7 +16,7 @@
                 <div class="star">
               
                   <span class="full" data-value="2"></span>
-                  <span class="half" data-value="1.5"></span>
+                  <!-- <span class="half" data-value="1.5"></span> -->
                   <span class="selected"></span>
               
                 </div>
@@ -24,7 +24,7 @@
                 <div class="star">
               
                   <span class="full" data-value="3"></span>
-                  <span class="half" data-value="2.5"></span>
+                  <!-- <span class="half" data-value="2.5"></span> -->
                   <span class="selected"></span>
               
                 </div>
@@ -32,7 +32,7 @@
                 <div class="star">
               
                   <span class="full" data-value="4"></span>
-                  <span class="half" data-value="3.5"></span>
+                  <!-- <span class="half" data-value="3.5"></span> -->
                   <span class="selected"></span>
               
                 </div>
@@ -40,20 +40,28 @@
                 <div class="star">
               
                   <span class="full" data-value="5"></span>
-                  <span class="half" data-value="4.5"></span>
+                  <!-- <span class="half" data-value="4.5"></span> -->
                   <span class="selected"></span>
               
                 </div>
               
-        
+                <input type="hidden" class='js-score'/>
+
+
               </div>
 
               <script>
+                        // get hidden in put value
+                        // fill how many stars it says
+                        $('.rating').each(function() {
+                          	console.log($(this).siblings('.user-rating').val());
+                        });
+
                         var starClicked = false;
 
                         $(function() {
                         
-                          $('.star').click(function() {
+                          $('.star').unbind('click').click(function() {
                         
                             $(this).children('.selected').addClass('is-animated');
                             $(this).children('.selected').addClass('pulse');
@@ -68,30 +76,53 @@
                             starClicked = true;
                           })
                         
-                          $('.half').click(function() {
-                            if (starClicked == true) {
-                              setHalfStarState(this)
-                            }
-                            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+                          // $('.half').unbind('click').click(function() {
+                          //   if (starClicked == true) {
+                          //     setHalfStarState(this)
+                          //   }
+
+                          //   var rating = $(this).data('value');
+
+                          //   $(this).closest('.rating').find('.js-score').val(rating);
                         
-                            $(this).closest('.rating').data('vote', $(this).data('value'));
-                            calculateAverage()
-                            console.log(parseInt($(this).data('value')));
+                          //   $(this).closest('.rating').data('vote', $(this).data('value'));
+                          //   // calculateAverage()
+                            
+                          // })
                         
-                          })
-                        
-                          $('.full').click(function() {
+                          $('.full').unbind('click').click(function() {
                             if (starClicked == true) {
                               setFullStarState(this)
                             }
-                            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+
+                            var rating = $(this).data('value');
+
+                            $(this).closest('.rating').find('.js-score').val(rating);
                         
                             $(this).find('js-average').text(parseInt($(this).data('value')));
                         
                             $(this).closest('.rating').data('vote', $(this).data('value'));
-                            calculateAverage()
+                            // calculateAverage()
                         
-                            console.log(parseInt($(this).data('value')));
+                            var movieId = $(this).parent().parent().parent().attr('movieId');
+                            
+                            var ratingForm = $('<form>', {
+                              'action': '/rateMovie',
+                              'method': 'POST',
+                            })
+                              .append($('<input>', {
+                                'name': 'movieId',
+                                'value': movieId,
+                                'type': 'hidden'
+                              }))
+                              .append($('<input>', {
+                                'name': 'rating',
+                                'value': parseInt(rating),
+                                'type': 'hidden'
+                              }));
+
+                            $(document.body).append(ratingForm);
+                            ratingForm.submit();
                           })
                         
                           $('.half').hover(function() {

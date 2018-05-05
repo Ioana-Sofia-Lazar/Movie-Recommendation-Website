@@ -83,5 +83,25 @@ module.exports = function (omdb, seen) {
         res.render('seen', params);
     });
 
+    router.post('/rateMovie', async (req, res) => {
+        if (!req.session.user_id) {
+            res.redirect('/');
+            return;
+        }
+        
+        let movieId = req.body.movieId;
+        let rating = req.body.rating;
+        let userId = req.session.user_id;
+
+        try {
+            await seen.rateMovie(userId, movieId, rating);
+        } catch (err) {
+            res.render('error', { errorMessage: `An error occured: ${err}` });
+        }
+
+        backURL = req.header('Referer') || '/';
+        res.redirect(backURL);
+    });
+
     return router;
 };
