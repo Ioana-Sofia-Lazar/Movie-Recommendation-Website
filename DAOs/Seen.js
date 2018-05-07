@@ -63,6 +63,21 @@ class Seen {
         });
     }
 
+    getNumberOfRatings(user_id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT COUNT(*) number FROM seen WHERE user_id = ? AND rating > 0;',
+                [user_id],
+                (err, results) => { 
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    results[0] ? resolve(results[0]) : resolve(0);
+                });
+        });
+    }
+
     addToSeen(info) {
         return new Promise((resolve, reject) => {
             this.db.query('INSERT INTO seen (user_id, movie_id, rating) VALUES (?,?,?)',

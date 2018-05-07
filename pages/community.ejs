@@ -19,7 +19,7 @@
                             let user = userProfiles[i]; %>
                             <a href="/profile?user=<%= user.user_id %>">
                 <div class="content userContainer">
-                    <div class="userPhoto" style="background-image: url(<%= user.photo ? '../images/upload_images/' + user.photo : '../images/profile-placeholder.png' %>)">
+                    <div class="userPhoto" style="background-image: url(<%= user.photo ? user.photo : '../images/profile-placeholder.png' %>)">
                     </div>      
                     <div class="userInfo">
                     <h4 class="userName"><%= user.fname + " " + user.lname %></h4>

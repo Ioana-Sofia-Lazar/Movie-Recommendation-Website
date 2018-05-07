@@ -14,22 +14,44 @@
         <div class="mainContainer">
             <h4 class="pageTitle">
                 <span class="fa fa-inbox titleIcon"></span>Recommendations</h4>
-            <div class="moviesContainer">
-                <div class="content movieContainer">
-                    <div class="movieCover" style="background-image: url(https://static.highsnobiety.com/wp-content/uploads/2017/08/24235415/blade-runner-2049-official-poster-001-480x740.jpg)">
-                    </div>
-                    <h5 class="movieTitle">Blade Runner</h5>
-                    <div class="recommendationsMovieOptions">
-                        <button type="button" class="btn btn-default optionButton">
-                            <span class="fa fa-bookmark buttonIcon"></span>Watchlist
-                        </button>
-                        <button type="button" class="btn btn-default optionButton">
-                            <span class="fa fa-check buttonIcon"></span>Seen
-                        </button>
-                    </div>
-                </div>
 
-            </div>
+                <% if (locals.numberOfRatings && numberOfRatings < 15) { %>
+                <div class="alert alert-dismissible alert-primary" style="background-color: #f47c3c">
+                   <p>Before giving you recommendations, you need to <strong>rate</strong> at least 15 movies. </p>
+                       <p>So far you have rated: <strong><%= locals.numberOfRatings %>/15</strong></p>
+                  </div>
+            <% } else { 
+                     if (locals.movieRecommendations) { %>
+                    <div class="moviesContainer">
+                            <% for(var i = 0; i < movieRecommendations.length; i++) {
+                                let movieData = movieRecommendations[i]; %>
+                        <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
+                            <div class="content movieContainer">
+                                <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
+                                </div>
+                                <h5 class="movieTitle">
+                                    <%= movieData.Title %>
+                                </h5>
+                                <% if (userLoggedIn) { %>
+                                <div class="recommendationsMovieOptions">
+                                    <a href="/addToWatchlist?movieId=<%= movieData.imdbID %>">
+                                        <button type="button" class="btn btn-default optionButton <% if (movieData.isInWatchlist) { %> optionButtonActive <% } %>">
+                                            <span class="fa fa-bookmark buttonIcon"></span>Watchlist
+                                        </button>
+                                    </a>
+                                    <a href="/addToSeen?movieId=<%= movieData.imdbID %>">
+                                        <button type="button" class="btn btn-default optionButton <% if (movieData.isInSeen) { %> optionButtonActive <% } %>">
+                                            <span class="fa fa-check buttonIcon"></span>Seen
+                                        </button>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+                        </a>
+                        <% } %>
+                    </div>
+                    <% }
+             } %>
 
         </div>
 
