@@ -25,7 +25,8 @@ app = Flask(__name__)
 @requires_token
 def get():
 	imdb_id = request.args.get('id').lstrip('t').lstrip('0')
-	num = request.args.get('num', default=10)
+	num = int(request.args.get('num', default=10))
+
 	movies = get_similar_movies(imdb_id, num)
 
 	data = [{ 'id': 'tt' + pad(movie) } for movie in movies]
