@@ -96,10 +96,8 @@ module.exports = function (dateformat, omdb, profile, watchlist, seen) {
         for (var i = 0; i < seenMovies.length; i++) {
             let movieId = seenMovies[i]['movie_id'];
             let rawData = await omdb.getMovieById(movieId);
-            // also send current user's rating for this movie
-            let userRating = await seen.getRating(userId);
-            console.log("~" + userRating);
-            rawData.userRating = userRating;
+            
+            rawData.userRating = seenMovies[i].rating;
             moviesData.push(rawData);
         }
         params.moviesData = moviesData;

@@ -17,10 +17,15 @@
                         <%= movie.Title %>
                     </h5>
                     <div class="watchlistMovieOptions" movieId="<%= movie.imdbID %>">
-                        <input type="hidden" class='user-rating' value="<%= movie.userRating %>" />
+                        <input type="hidden" class="user-rating" value="<%= movie.userRating %>" />
                         <%- include rating %>
+
                     </div>
                 </div>
             
-            <% }}} %>
+            <% }
+            %>
+                <script src="../assets/rating.js"></script>            
+            <%
+            }} %>
 </div>
