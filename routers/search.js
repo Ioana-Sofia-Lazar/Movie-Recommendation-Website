@@ -1,11 +1,25 @@
 module.exports = function (omdb, watchlist, seen) {
     let router = require('express').Router();
 
-    router.get('/search', (req, res) => {
+    router.get('/searchSimilar', (req, res) => {
         let params = {
             userLoggedIn: req.session.user_id
         };
-        res.render('search', params);
+        res.render('search-similar', params);
+    });
+
+    router.get('/searchSimilar/:title', async (req, res) => {
+        let params = {
+            userLoggedIn: req.session.user_id
+        };
+        
+        // title introduces by user
+        let title = req.params.title;
+        
+        let moviesData = [];
+        // todo get similar movies to the one with the title 'title' and put it in moviesData
+
+        res.render('search-similar', params);
     });
 
     router.get('/search/:title', async (req, res) => {
@@ -42,7 +56,7 @@ module.exports = function (omdb, watchlist, seen) {
         movieData.isInSeen = result;
 
         params.movieData = movieData;
-        res.render('search', params);
+        res.render('view-movie', params);
     });
 
     return router;

@@ -8,8 +8,14 @@
                 <li class="nav-item"><a class="nav-link <% if(!locals.userLoggedIn) { %> disabledLink <% } %>" href="/seen">Seen</a> </li>
                 <li class="nav-item"><a class="nav-link <% if(!locals.userLoggedIn) { %> disabledLink <% } %>" href="/community">Community</a> </li>
                 <div class="navVerticalDivider"></div>
-                <!-- <li class="nav-item"><a class="nav-link " href="/explore">Explore</a> </li> -->
-                <li class="nav-item"><a class="nav-link" href="/search">Search</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/searchSimilar">Similar</a> </li>
+            </ul>
+            <ul class="navbar-form navbar-left">
+                    <div class="form-group">
+                            <input type="text" id="searchInput" name="title" class="form-control" style="display: inline; width:180px;" placeholder="Enter a movie title.."
+                            />
+                            <button id="searchBtn" type="button" class="btn btn-primary searchBtn">Search</button>
+                        </div>
             </ul>
             <% if (!locals.userLoggedIn) { %>
                 <ul class="nav navbar-nav navbar-right">
@@ -34,5 +40,13 @@
             <% } %>
         </div>
     </div>
+
+    <script type="text/javascript">
+        document.getElementById('searchBtn').onclick = () => {
+            let title = document.getElementById('searchInput').value;
+
+            window.location.href = `/search/${title}`;
+        };
+    </script>
     
 

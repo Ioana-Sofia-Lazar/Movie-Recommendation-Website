@@ -20,17 +20,18 @@
     <% include ../partials/navbar %>
         <div class="mainContainer">
             <h4 class="pageTitle">
-                <span class="fa fa-search titleIcon"></span>Search</h4>
+                <span class="fa fa-search titleIcon"></span>Search similar movies</h4>
             <div class="form-group">
-                <input type="text" id="searchInput" name="title" class="form-control" style="display: inline; width:400px;" placeholder="Enter a movie title.."
-                />
-                <button id="searchBtn" type="button" class="btn btn-primary searchBtn">Search movie</button>
-                <button type="submit" class="btn btn-primary searchBtn">Search similar movies</button>
+                <input type="text" id="searchSimilarInput" name="title" class="form-control" style="display: inline; width:400px;" placeholder="Enter a movie title.."
+                />                
+                <button id="searchSimilarBtn" type="button" class="btn btn-primary searchBtn">Search similar movies</button>
             </div>
 
             <!-- search results -->
-            <% if (locals.movieData) { %>
+            <% if (locals.moviesData) { %>
                 <div class="moviesContainer">
+                       <% for(var i = 0; i < moviesData.length; i++) {
+                            let movie = moviesData[i]; %>
                     <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
                         <div class="content movieContainer">
                             <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
@@ -54,17 +55,17 @@
                             <% } %>
                         </div>
                     </a>
-
+                        <% } %>
                 </div>
                 <% } %>
 
         </div>
 
         <script type="text/javascript">
-            document.getElementById('searchBtn').onclick = () => {
-                let title = document.getElementById('searchInput').value;
+            document.getElementById('searchSimilarBtn').onclick = () => {
+                let title = document.getElementById('searchSimilarInput').value;
 
-                window.location.href = `/search/${title}`;
+                window.location.href = `/searchSimilar/${title}`;
             };
         </script>
 
