@@ -1,4 +1,4 @@
-module.exports = function (omdb, watchlist, seen) {
+module.exports = function (omdb, rs, watchlist, seen) {
     let router = require('express').Router();
 
     router.get('/searchSimilar', (req, res) => {
@@ -12,12 +12,27 @@ module.exports = function (omdb, watchlist, seen) {
         let params = {
             userLoggedIn: req.session.user_id
         };
-        
+
         // title introduces by user
         let title = req.params.title;
-        
-        let moviesData = [];
-        // todo get similar movies to the one with the title 'title' and put it in moviesData
+
+
+        let imdbId = await omdb.getMovieByTitle(title);
+        imdbId = imdbId.imdbID;
+        let similarIds = await rs.getSimilarMoviesById(imdbId, 20);
+
+        let promises = [];
+        for (var i = 0; i < similarIds.length; i++) {
+            let movieId = similarIds[i].id;
+
+            if (movieId == 'tt0000000') {
+                continue;
+            }
+
+            promises.push(omdb.getMovieById(movieId));
+        }
+        params.moviesData = await Promise.all(promises);
+        params.title = title.charAt(0).toUpperCase() + title.slice(1);
 
         res.render('search-similar', params);
     });
@@ -26,7 +41,7 @@ module.exports = function (omdb, watchlist, seen) {
         let params = {
             userLoggedIn: req.session.user_id
         };
-        
+
         let title = req.params.title;
         let movieData = await omdb.getMovieByTitle(title);
 

@@ -5,13 +5,12 @@ module.exports = function (omdb,rs) {
         let imdbId = req.params.id;
         let similarIds = await rs.getSimilarMoviesById(imdbId);
         
-        let result = similarIds;
-        // let result = [];
-        // for (var i = 0; i < similarIds.length; i++) {
-        //     let movieData = await omdb.getMovieById(similarIds[i]);
-        //     console.log(JSON.stringify(movieData));
-        //     result.push(movieData);
-        // }
+        let result = [];
+        for (var i = 0; i < similarIds.length; i++) {
+            let movieId = similarIds[i].id;
+            let movieData = await omdb.getMovieById(movieId);
+            result.push(movieData);
+        }
         
         res.send(result);
     });

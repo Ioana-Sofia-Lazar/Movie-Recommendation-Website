@@ -60,13 +60,12 @@ module.exports = function (dateformat, omdb, profile, watchlist, seen) {
         }
 
         let watchlistMovies = await watchlist.getListById(userId);
-        let moviesData = [];
+        let promises = [];
         for (var i = 0; i < watchlistMovies.length; i++) {
             let movieId = watchlistMovies[i]['movie_id'];
-            let rawData = await omdb.getMovieById(movieId);
-            moviesData.push(rawData);
+            promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = moviesData;
+        params.moviesData = await Promise.all(promises);
 
         res.render('profile', params);
     });
@@ -92,15 +91,16 @@ module.exports = function (dateformat, omdb, profile, watchlist, seen) {
         }
 
         let seenMovies = await seen.getListById(userId);
-        let moviesData = [];
+        let promises = [];
         for (var i = 0; i < seenMovies.length; i++) {
             let movieId = seenMovies[i]['movie_id'];
-            let rawData = await omdb.getMovieById(movieId);
-            
-            rawData.userRating = seenMovies[i].rating;
-            moviesData.push(rawData);
+            promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = moviesData;
+        params.moviesData = await Promise.all(promises);
+
+        for (var i = 0; i < params.moviesData.length; i++) {
+            params.moviesData[i].userRating = seenMovies[i].rating; 
+        }
 
         res.render('profile', params);
     });

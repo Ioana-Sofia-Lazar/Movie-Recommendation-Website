@@ -12,13 +12,12 @@ module.exports = function (omdb, watchlist, seen) {
         params.userLoggedIn = req.session.user_id;
         params.viewingUserWithId = req.session.user_id;
         let watchlistMovies = await watchlist.getListById(req.session.user_id);
-        let moviesData = [];
+        let promises = [];
         for (var i = 0; i < watchlistMovies.length; i++) {
             let movieId = watchlistMovies[i]['movie_id'];
-            let rawData = await omdb.getMovieById(movieId);
-            moviesData.push(rawData);
+            promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = moviesData;
+        params.moviesData = await Promise.all(promises);
         res.render('watchlist', params);
     });
 
@@ -77,7 +76,7 @@ module.exports = function (omdb, watchlist, seen) {
             // movie is already in Watchlist, so remove it
             result = 0;
             try {
-                result = await watchlist.removeFromSeen(info);
+                result = await watchlist.removeFromWatchlist(info);
             } catch (err) {
                 res.render('error', { errorMessage: `An error occured: ${err}` });
             }

@@ -5,8 +5,9 @@ class RSAPI {
         this.url = `http://${address}`;
     }
 
-    getSimilarMoviesById(imdb_id) {
-        return fetch(`${this.url}:5002/similarToMovie?id=${imdb_id}`, {
+    getSimilarMoviesById(imdb_id, num) {
+        num = num || 10;
+        return fetch(`${this.url}:5002/similarToMovie?id=${imdb_id}&num=${num}`, {
             headers: {
                 Token: '5UP3R53CR37'
             }

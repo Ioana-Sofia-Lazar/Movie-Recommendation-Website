@@ -28,10 +28,11 @@
             </div>
 
             <!-- search results -->
-            <% if (locals.moviesData) { %>
+            <% if (locals.moviesData && locals.moviesData.length > 0) { %>
+                <p>Movies similar to <a href="/search/<%= locals.title %>"><%= locals.title %></a></p>
                 <div class="moviesContainer">
                        <% for(var i = 0; i < moviesData.length; i++) {
-                            let movie = moviesData[i]; %>
+                            let movieData = moviesData[i]; %>
                     <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
                         <div class="content movieContainer">
                             <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
@@ -57,8 +58,9 @@
                     </a>
                         <% } %>
                 </div>
+                <% } else if (locals.title && locals.title.length > 0) { %>
+                    <p>We could not find movies similar to <%= locals.title %>.</p>
                 <% } %>
-
         </div>
 
         <script type="text/javascript">

@@ -67,18 +67,20 @@ module.exports = function (omdb, seen) {
         }
 
         let seenMovies = await seen.getListById(req.session.user_id);
-        let moviesData = [];
+        let promises = [];
 
         for (var i = 0; i < seenMovies.length; i++) {
             let movieId = seenMovies[i]['movie_id'];
-            let rawData = await omdb.getMovieById(movieId);
-            
-            rawData.userRating = seenMovies[i].rating;
-            moviesData.push(rawData);
+            promises.push(omdb.getMovieById(movieId));
         }
 
         params.userLoggedIn = req.session.user_id;
-        params.moviesData = moviesData;
+        params.moviesData = await Promise.all(promises);
+        
+        for (var i = 0; i < params.moviesData.length; i++) {
+            params.moviesData[i].userRating = seenMovies[i].rating;
+        }
+
         res.render('seen', params);
     });
 

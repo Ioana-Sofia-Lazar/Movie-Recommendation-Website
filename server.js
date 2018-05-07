@@ -42,6 +42,7 @@ const profileRouter = require('./routers/profile.js');
 const watchlistRouter = require('./routers/watchlist.js');
 const seenRouter = require('./routers/seen.js');
 const searchRouter = require('./routers/search.js');
+const recommendationsRouter = require('./routers/recommendations.js');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -69,7 +70,8 @@ app.use(authRouter(user));
 app.use(profileRouter(dateformat, omdb, profile, watchlist, seen));
 app.use(watchlistRouter(omdb, watchlist, seen));
 app.use(seenRouter(omdb, seen));
-app.use(searchRouter(omdb, watchlist, seen));
+app.use(searchRouter(omdb, rs, watchlist, seen));
+app.use(recommendationsRouter(omdb, rs, seen));
 
 // index  
 app.get('/', (req, res) => {
@@ -77,38 +79,6 @@ app.get('/', (req, res) => {
         userLoggedIn: req.session.user_id
     };
     res.render('index', params);
-});
-
-// recommendations
-app.get('/recommendations', async (req, res) => {
-    if (!req.session.user_id) {
-        res.redirect('/');
-        return;
-    }
-    
-    let params = {
-        userLoggedIn: req.session.user_id
-    };
-
-    // get number of rated movies for current user
-    let result = 0;
-    try {
-        result = await seen.getNumberOfRatings(params.userLoggedIn);
-    } catch (err) {
-        res.render('error', { errorMessage: `An error occured: ${err}` });
-        return;
-    }
-    params.numberOfRatings = result['number'];
-
-    // if he has rated 15 movies already, get recommendations
-    if (result['number'] >= 15) {
-        let movieRecommendations = [];
-        // todo get recommendations
-
-        params.movieRecommendations = movieRecommendations;
-    }
-
-    res.render('recommendations', params);
 });
 
 // view movie details
