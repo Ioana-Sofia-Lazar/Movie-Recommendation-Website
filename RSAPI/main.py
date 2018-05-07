@@ -7,12 +7,17 @@ from recommender import get_similar_movies
 TOKEN = '5UP3R53CR37'
 
 def requires_token(f):
-	# @wraps(f)
 	def wrap(*args, **kwargs):
 		if 'Token' in request.headers.keys() and request.headers['Token'] == TOKEN:
 			return f(*args, **kwargs)
 		return jsonify({ 'error': 'You must provide a valid token!' })
 	return wrap
+
+def pad(id):
+	id = str(id)
+	while len(id) < 7:
+		id = '0' + id
+	return id
 
 app = Flask(__name__)
 
@@ -23,7 +28,7 @@ def get():
 	num = request.args.get('num', default=10)
 	movies = get_similar_movies(imdb_id, num)
 
-	data = [{ 'id': movie } for movie in movies]
+	data = [{ 'id': 'tt' + pad(movie) } for movie in movies]
 	return json.dumps(data)
 
 if __name__ == '__main__':
