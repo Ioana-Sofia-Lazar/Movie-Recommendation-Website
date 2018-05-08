@@ -10,6 +10,7 @@
 
 <body>
         <div class="container mainContainer">
+                <div style="height:500px;">
                 <div class="leftSide">
                         <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">
                         </div>
@@ -49,6 +50,36 @@
                                 </p>
                         </div>
                 </div>
+                </div>
+                <%
+                        if (locals.similarMoviesData.length > 0) {
+                %>
+                                <div class="container">
+                                <h2>Similar movies</h2>
+                                <br>
+                                <div class="moviesContainer">
+                                <% for(var i = 0; i < similarMoviesData.length; i++) {
+                                        let movieData = similarMoviesData[i]; 
+                                        if (!movieData.imdbID) {
+                                                continue;
+                                        }
+                                        %>
+                                        <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
+                                        <div class="content movieContainer">
+                                                <center><div class="movieCover" style="background-image: url(<%= movieData.Poster %>);width:150px;height:100px;">
+                                                </div></center>
+                                                <h5 class="movieTitle">
+                                                        <%= movieData.Title %>
+                                                </h5>
+                                        </div>
+                                </a>
+                                        <% } %>
+                                </div>
+                                </div>
+                                
+                <%
+                        }
+                %>
         </div>
 
         <!-- movie title -->
