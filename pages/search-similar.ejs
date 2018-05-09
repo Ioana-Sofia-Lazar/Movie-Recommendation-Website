@@ -32,7 +32,11 @@
                 <p>Movies similar to <a href="/search/<%= locals.title %>"><%= locals.title %></a></p>
                 <div class="moviesContainer">
                        <% for(var i = 0; i < moviesData.length; i++) {
-                            let movieData = moviesData[i]; %>
+                            let movieData = moviesData[i]; 
+                            if (!movieData.imdbID) {
+                                continue;
+                            }
+                        %>
                     <a href="/viewMovie?movieId=<%= movieData.imdbID %>">
                         <div class="content movieContainer">
                             <div class="movieCover" style="background-image: url(<%= movieData.Poster %>)">

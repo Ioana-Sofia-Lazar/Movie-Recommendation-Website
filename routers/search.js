@@ -31,7 +31,7 @@ module.exports = function (omdb, rs, watchlist, seen) {
 
             promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = await Promise.all(promises);
+        params.moviesData = await Promise.all(promises).catch(err => console.log(err));
         params.title = title.charAt(0).toUpperCase() + title.slice(1);
 
         res.render('search-similar', params);

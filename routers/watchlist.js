@@ -17,7 +17,7 @@ module.exports = function (omdb, watchlist, seen) {
             let movieId = watchlistMovies[i]['movie_id'];
             promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = await Promise.all(promises);
+        params.moviesData = await Promise.all(promises).catch(err => console.log(err));
         res.render('watchlist', params);
     });
 

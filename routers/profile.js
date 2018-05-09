@@ -96,7 +96,7 @@ module.exports = function (dateformat, omdb, profile, watchlist, seen) {
             let movieId = seenMovies[i]['movie_id'];
             promises.push(omdb.getMovieById(movieId));
         }
-        params.moviesData = await Promise.all(promises);
+        params.moviesData = await Promise.all(promises).catch(err => console.log(err));
 
         for (var i = 0; i < params.moviesData.length; i++) {
             params.moviesData[i].userRating = seenMovies[i].rating; 
