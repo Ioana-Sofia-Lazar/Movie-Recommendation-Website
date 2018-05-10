@@ -50,6 +50,13 @@ module.exports = function (omdb, rs, watchlist, seen) {
             movie_id: movieData.imdbID
         };
 
+
+        if (!movieData.imdbID) {
+            params.title = title.charAt(0).toUpperCase() + title.slice(1);
+            res.render('view-movie', params);
+            return;
+        }
+
         // check if movie is in watchlist
         let result = false;
         try {
@@ -69,6 +76,23 @@ module.exports = function (omdb, rs, watchlist, seen) {
             return;
         }
         movieData.isInSeen = result;
+
+        let similarIds = await rs.getSimilarMoviesById(info.movie_id, 4);
+        params.similarMoviesData = [];
+
+        if (similarIds && similarIds.length > 0) {
+            let promises = [];
+            for (var i = 0; i < similarIds.length; i++) {
+                let movieId = similarIds[i].id;
+
+                if (movieId == 'tt0000000') {
+                    continue;
+                }
+
+                promises.push(omdb.getMovieById(movieId));
+            }
+            params.similarMoviesData = await Promise.all(promises).catch(err => console.log(err));
+        }        
 
         params.movieData = movieData;
         res.render('view-movie', params);

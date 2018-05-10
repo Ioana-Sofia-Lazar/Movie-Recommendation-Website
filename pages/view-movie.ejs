@@ -9,6 +9,9 @@
 </head>
 
 <body>
+        <%
+                if (locals.movieData) {
+        %>
         <div class="container mainContainer">
                 <div style="height:500px;">
                 <div class="leftSide">
@@ -58,8 +61,8 @@
                                 <h2>Similar movies</h2>
                                 <br>
                                 <div class="moviesContainer">
-                                <% for(var i = 0; i < similarMoviesData.length; i++) {
-                                        let movieData = similarMoviesData[i]; 
+                                <% for(var i = 0; i < locals.similarMoviesData.length; i++) {
+                                        let movieData = locals.similarMoviesData[i]; 
                                         if (!movieData.imdbID) {
                                                 continue;
                                         }
@@ -102,6 +105,11 @@
                 </div>
                 <% } %>
         </div>
+        <% } else { %>
+                <div class="container mainContainer">
+                        <h2>We could not find the movie: <%= title %></h2>
+                </div>
+        <% } %>
         <% include ../partials/navbar %>
 
 </body>

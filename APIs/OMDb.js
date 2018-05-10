@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 class OMDb {
     constructor(key) {
-        this.url = `http://www.omdbapi.com/?apikey=${key}&`;
+        this.url = `http://www.omdbapi.com/?apikey=${key}&plot=full&`;
     }
 
     getMovieById(imdb_id) {

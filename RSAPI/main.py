@@ -39,6 +39,8 @@ def get():
 @requires_token
 def post():
 	req_data = request.get_json(silent=True)
+
+	print(req_data)
 	
 	ratings = [(item['imdb_id'].lstrip('t').lstrip('0'), item['rating']) for item in req_data]
 	recommendations = get_recommendations(ratings)

@@ -32,7 +32,7 @@ const watchlist = new Watchlist(db);
 
 // APIs
 const omdb = new OMDb(process.env.OMDB_KEY);
-const rs = new RSAPI('192.168.1.7');
+const rs = new RSAPI('127.0.0.1');
 
 // routers
 const testRouter = require('./routers/test.js');
