@@ -15,6 +15,19 @@ class RSAPI {
             .then(res => res.json())
             .catch(err => console.log(err))
     }
+
+    getRecommendations(ratings) {
+        return fetch(`${this.url}:5002/recommendations`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Token: '5UP3R53CR37'
+            },
+            body: JSON.stringify(ratings)
+        })
+            .then(res => res.json())
+            .catch(err => console.log(err))
+    }
 }
 
 module.exports = RSAPI;

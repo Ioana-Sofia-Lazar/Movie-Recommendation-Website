@@ -32,8 +32,7 @@ const watchlist = new Watchlist(db);
 
 // APIs
 const omdb = new OMDb(process.env.OMDB_KEY);
-// const rs = new RSAPI('192.168.1.4');
-const rs = new RSAPI('192.168.1.6');
+const rs = new RSAPI('192.168.1.7');
 
 // routers
 const testRouter = require('./routers/test.js');
@@ -68,7 +67,7 @@ app.use((req, res, next) => {
 });
 
 // app routes
-app.use(testRouter(omdb, rs));
+app.use(testRouter(omdb, rs, profile, watchlist, seen));
 app.use(indexRouter());
 app.use(authRouter(user));
 app.use(profileRouter(dateformat, omdb, profile, watchlist, seen));

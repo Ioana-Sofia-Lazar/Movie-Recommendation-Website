@@ -1,17 +1,29 @@
-module.exports = function (omdb,rs) {
+module.exports = function (omdb, rs, profile, watchlist, seen) {
     let router = require('express').Router();
 
-    router.get('/test/:id', async (req, res) => {
-        let imdbId = req.params.id;
-        let similarIds = await rs.getSimilarMoviesById(imdbId);
+    router.get('/test', async (req, res) => {
+        let params = {
+            userLoggedIn: req.session.user_id
+        }
+        let user_id = req.session.user_id;
+        let ratings = await seen.getListById(user_id);
+
+        ratings = ratings.map(r => ({
+            imdb_id: r.movie_id,
+            rating: r.rating
+        }));
         
         let result = [];
-        for (var i = 0; i < similarIds.length; i++) {
-            let movieId = similarIds[i].id;
-            let movieData = await omdb.getMovieById(movieId);
-            result.push(movieData);
+        let recommendations = await rs.getRecommendations(ratings);
+
+        let promises = [];
+        for (var i = 0; i < recommendations.length; i++) {
+            let movieId = recommendations[i].id;
+            promises.push(omdb.getMovieById(movieId));
         }
-        
+        params.moviesData = await Promise.all(promises).catch(err => console.log(err));
+
+        result = params.moviesData;
         res.send(result);
     });
     

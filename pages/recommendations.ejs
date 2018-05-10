@@ -15,10 +15,10 @@
             <h4 class="pageTitle">
                 <span class="fa fa-inbox titleIcon"></span>Recommendations</h4>
 
-                <% if (locals.numberOfRatings && numberOfRatings < 15) { %>
+                <% if (locals.numberOfRatings && numberOfRatings < 10) { %>
                 <div class="alert alert-dismissible alert-primary" style="background-color: #f47c3c">
-                   <p>Before giving you recommendations, you need to <strong>rate</strong> at least 15 movies. </p>
-                       <p>So far you have rated: <strong><%= locals.numberOfRatings %>/15</strong></p>
+                   <p>Before giving you recommendations, you need to <strong>rate</strong> at least 10 movies. </p>
+                       <p>So far you have rated: <strong><%= locals.numberOfRatings %>/10</strong></p>
                   </div>
             <% } else { 
                      if (locals.movieRecommendations) { %>
